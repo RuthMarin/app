@@ -31,24 +31,64 @@ export default class App extends Component<{}> {
   }
    mostrarDatos(){
     if(this.state.resultado){
-      return(
-        <View>
-          <Text>
-          {this.state.resultado.name}
-          </Text>
-          <Text>
-          {this.state.resultado.run}
-          </Text>
+      if(this.state.resultado.validity){
+        return(
+          <View>
+            <Text>
+              Nombre: {this.state.resultado.name}
+            </Text>
+            <Text>
+              {this.state.resultado.run}
+            </Text>
+            <Text>
+              Años :{this.state.resultado.age}
+            </Text>
+            <Text>
+              Toma de Examen:{this.state.resultado.lastPapDate}
+            </Text>
+            <Text>
+              Vigencia :{this.state.resultado.validityDate}
+            </Text>
+          </View>
+        )
+      }
+      else{
+        return(
+          <View>
+            <Text>
+              Nombre: {this.state.resultado.name}
+            </Text>
+            <Text>
+              {this.state.resultado.run}          
+            </Text>
+            <Text>
+              Años :{this.state.resultado.age}
+            </Text>
+            <Text>
+              Toma de Examen:{this.state.resultado.lastPapDate}
+            </Text>
+            <Text>
+              Vigencia :{this.state.resultado.validityDate}
+            </Text>
+            <Text>
+              Al día
+            </Text>
+            <Text>
+              Atrasado
+            </Text>
+            <Text>
+              Años :{this.state.resultado.diffYears}
+            </Text>
+            <Text>
+              Meses :{this.state.resultado.diffMonths}
+            </Text>
+            <Text>
+              Días:{this.state.resultado.diffDays}
+            </Text>
+          </View>
+        )
+      }
 
-          {this.state.resultado.validity ? <Text>
-            Al día
-          </Text>: <Text>
-            Atrasado
-          </Text>}
-
-
-        </View>
-      )
     }
   }
   buscar(){
@@ -95,8 +135,7 @@ export default class App extends Component<{}> {
       enableOnAndroid={true}
         ref="scroll"
       >
-          <ScrollView contentContainerStyle={styles.container}>
-
+        <ScrollView contentContainerStyle={styles.container}>
           <Image
             source={require('../assets/images/fff.png')}
             style={styles.ImageStyle2}
@@ -110,8 +149,6 @@ export default class App extends Component<{}> {
               source={require('../assets/images/icon-cervical-vph.png')}
               style={styles.ImageStyle}
             />
-
-
             <TextInput
               style={{ flex: 1 }}
               placeholder="Ingresa tu R.U.N aquí"
@@ -119,23 +156,17 @@ export default class App extends Component<{}> {
               onFocus={(event) => this.onFocus(event)}
               onChangeText={(text)=>this.setState({texto: text})}
             />
-
-
           </View>
-
-
-
           <View>
             <Button
              onPress={this.buscar}
              title="Consultar"
-              containerStyle={{padding:10, height:40, overflow:'hidden', borderRadius:5, backgroundColor: 'white'}}
+              containerStyle={{padding:10, height:40, overflow:'hidden', borderRadius:5, backgroundColor: '#80D2DA'}}
               disabledContainerStyle={{backgroundColor: '#ffc8eb'}}
-              style={{fontSize: 17, color: '#1b4d83'}}>
+              style={{fontSize: 17, color: 'white'}}>
               Consultar
             </Button>
           </View>
-          
           <View>
             {this.mostrarDatos()}
           </View>
@@ -152,13 +183,13 @@ export default class App extends Component<{}> {
 const styles = StyleSheet.create({
   contenedorGrande: {
      flex: 1,
-    backgroundColor: '#0089B1',
+    backgroundColor: '#fff',
     resizeMode: 'cover',
   },
   container: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#0089B1',
+    backgroundColor: '#fff',
     borderRadius: 5,
 
   },
