@@ -3,6 +3,8 @@ import ReactNative from 'react-native';
 import { StyleSheet, View, TextInput, Image, Text, ScrollView } from 'react-native';
 import Button from 'react-native-button';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import axios from 'axios';
+
 
 export default class App extends Component<{}> {
 
@@ -115,28 +117,12 @@ export default class App extends Component<{}> {
               placeholder="Ingresa tu R.U.N aquí"
               underlineColorAndroid="transparent"
               onFocus={(event) => this.onFocus(event)}
+              onChangeText={(text)=>this.setState({texto: text})}
             />
 
 
           </View>
-           <TextInput
-          style={{ flex: 1 }}
-          placeholder="Ingresa tu R.U.N aquí"
-          onChangeText={(text)=>this.setState({texto: text})}
-        />
-        <Text>
-        {this.state.texto}
-        </Text>
-        <Button
-          onPress={this.buscar}
-          title="Consultar"
-        />
-        <View>
-          {this.mostrarDatos()}
-        </View>
-        <View>
-          {this.encontrada()}
-        </View>
+
 
 
           <View>
@@ -148,6 +134,13 @@ export default class App extends Component<{}> {
               style={{fontSize: 17, color: '#1b4d83'}}>
               Consultar
             </Button>
+          </View>
+          
+          <View>
+            {this.mostrarDatos()}
+          </View>
+          <View>
+            {this.encontrada()}
           </View>
 
         </ScrollView>
@@ -167,7 +160,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#0089B1',
     borderRadius: 5,
-    
+
   },
 
   SectionStyle: {
