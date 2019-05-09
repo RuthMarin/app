@@ -49,6 +49,9 @@ export default class App extends Component<{}> {
             <Text>
               Vigencia :{this.state.resultado.validityDate}
             </Text>
+            <Text>
+              Al día
+            </Text>
           </View>
         )
       }
@@ -69,9 +72,6 @@ export default class App extends Component<{}> {
             </Text>
             <Text>
               Vigencia :{this.state.resultado.validityDate}
-            </Text>
-            <Text>
-              Al día
             </Text>
             <Text>
               Atrasado
