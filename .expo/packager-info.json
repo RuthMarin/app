@@ -1,9 +1,9 @@
 {
   "devToolsPort": 19002,
-  "expoServerPort": 19000,
-  "packagerPort": 19001,
-  "packagerPid": 5073,
-  "expoServerNgrokUrl": "https://p5-5dt.anonymous.apppap.exp.direct",
-  "packagerNgrokUrl": "https://packager.p5-5dt.anonymous.apppap.exp.direct",
-  "ngrokPid": 5139
+  "expoServerPort": null,
+  "packagerPort": null,
+  "packagerPid": null,
+  "expoServerNgrokUrl": "https://p5-5dt.anonymous.app.exp.direct",
+  "packagerNgrokUrl": "https://packager.p5-5dt.anonymous.app.exp.direct",
+  "ngrokPid": 8126
 }
