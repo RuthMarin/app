@@ -1,12 +1,11 @@
 import React from 'react';
-import { ExpoConfigView } from '@expo/samples';
 import { StyleSheet, View, TextInput, Image, Text, ScrollView, Button } from 'react-native';
 
-export default class SettingsScreen extends React.Component {
+export default class Login extends React.Component {
   static navigationOptions = {
-    title: 'app.json',
+    title: 'Login',
   };
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state= {
 
@@ -15,15 +14,14 @@ export default class SettingsScreen extends React.Component {
   }
 
   click(){
-    this.props.navigation.navigate('Login')
+    this.props.navigation.navigate('Home')
   }
 
   render() {
     /* Go ahead and delete ExpoConfigView and replace it with your
      * content, we just wanted to give you a quick view of your config */
-    return(
+    return (
       <View>
-        <ExpoConfigView />
         <Text>
         Hola
         </Text>
