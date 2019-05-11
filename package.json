@@ -19,7 +19,9 @@
     "react-native-button": "^2.3.0",
     "react-native-keyboard-aware-scroll-view": "^0.8.0",
     "react-native-table-component": "^1.2.0",
-    "react-navigation": "^3.0.9"
+    "react-navigation": "^3.0.9",
+    "react-redux": "^6.0.1",
+    "redux": "^4.0.1"
   },
   "devDependencies": {
     "babel-preset-expo": "^5.0.0",

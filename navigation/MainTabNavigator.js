@@ -6,6 +6,7 @@ import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import LinksScreen from '../screens/LinksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+import ConsultaScreen from '../screens/consultaScreen';
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
@@ -53,8 +54,31 @@ SettingsStack.navigationOptions = {
   ),
 };
 
-export default createBottomTabNavigator({
+const ConsultaStack = createStackNavigator({
+  Consulta: ConsultaScreen,
+});
+
+ConsultaStack.navigationOptions = ({ navigation }) => {
+  let tabBarVisible = true;
+  if (navigation.state.index > 0) {
+    tabBarVisible = false;
+  }
+
+  return {
+    tabBarVisible,
+  };
+};
+
+const TabNavigator = createBottomTabNavigator({
   Home: HomeStack,
   Link: LinksStack,
-  Settings: SettingsStack,
+  Settings: SettingsStack
 });
+
+const MainNavigator = createStackNavigator({
+  Tabs: TabNavigator,
+  Consulta: ConsultaScreen,
+  /* any other route you want to render above the tab bar */
+});
+
+export default MainNavigator;

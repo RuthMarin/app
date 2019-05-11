@@ -4,9 +4,11 @@ import { StyleSheet, View, TextInput, Image, Text, ScrollView } from 'react-nati
 import Button from 'react-native-button';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import axios from 'axios';
+import { connect } from 'react-redux';
+import * as actions from '../redux/actions';
 
 
-export default class App extends Component<{}> {
+class HomeScreen extends Component<{}> {
 
   _scrollToInput (reactNode: any) {
     // Add a 'scroll' ref to your ScrollView
@@ -62,7 +64,7 @@ export default class App extends Component<{}> {
               Nombre: {this.state.resultado.name}
             </Text>
             <Text>
-              {this.state.resultado.run}          
+              {this.state.resultado.run}
             </Text>
             <Text>
               Años :{this.state.resultado.age}
@@ -102,7 +104,10 @@ export default class App extends Component<{}> {
     const PatientDTO = {
       run: runV
     }
-    var link = "http://scanpapp.herokuapp.com/app/consultation?run=" + runV;
+    console.log(this.props);
+    this.props.navigation.navigate('Consulta')
+    this.props.setPaciente(runV)
+    /*var link = "http://scanpapp.herokuapp.com/app/consultation?run=" + runV;
     axios.get(link)
     .then(res=>{
       console.log("hola");
@@ -115,7 +120,7 @@ export default class App extends Component<{}> {
       this.setState({encontrada: false})
       this.setState({resultado: false})
 
-    })
+    })*/
   }
   encontrada(){
     if(!this.state.encontrada){
@@ -179,6 +184,15 @@ export default class App extends Component<{}> {
     );
   }
 }
+
+const mapStateToProps = state => {
+    return {
+        paciente: state.paciente
+    }
+}
+
+export default connect(mapStateToProps, actions)(HomeScreen);
+
 
 const styles = StyleSheet.create({
   contenedorGrande: {
