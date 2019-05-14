@@ -178,6 +178,7 @@ class HomeScreen extends Component<{}> {
           <View>
             {this.encontrada()}
           </View>
+         
 
         </ScrollView>
       </KeyboardAwareScrollView>
