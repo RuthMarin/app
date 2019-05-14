@@ -58,16 +58,8 @@ const ConsultaStack = createStackNavigator({
   Consulta: ConsultaScreen,
 });
 
-ConsultaStack.navigationOptions = ({ navigation }) => {
-  let tabBarVisible = true;
-  if (navigation.state.index > 0) {
-    tabBarVisible = false;
-  }
 
-  return {
-    tabBarVisible,
-  };
-};
+
 
 const TabNavigator = createBottomTabNavigator({
   Home: HomeStack,
@@ -75,10 +67,13 @@ const TabNavigator = createBottomTabNavigator({
   Settings: SettingsStack
 });
 
+TabNavigator.navigationOptions = {
+  header: null,
+}
+
 const MainNavigator = createStackNavigator({
   Tabs: TabNavigator,
   Consulta: ConsultaScreen,
-  /* any other route you want to render above the tab bar */
 });
 
 export default MainNavigator;
