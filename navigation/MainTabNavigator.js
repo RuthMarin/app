@@ -10,6 +10,7 @@ import ConsultaScreen from '../screens/consultaScreen';
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
+  Consulta: ConsultaScreen
 });
 
 HomeStack.navigationOptions = {
@@ -54,26 +55,42 @@ SettingsStack.navigationOptions = {
   ),
 };
 
-const ConsultaStack = createStackNavigator({
-  Consulta: ConsultaScreen,
-});
+
+
+
 
 
 
 
 const TabNavigator = createBottomTabNavigator({
-  Home: HomeStack,
-  Link: LinksStack,
-  Settings: SettingsStack
+  Home: {
+    screen: HomeStack,
+    navigationOptions: {
+            tabBarVisible: true,
+        },
+  },
+  Link: {
+    screen: LinksStack,
+    navigationOptions: {
+            tabBarVisible: true,
+        },
+  },
+  Settings: {
+    screen: SettingsStack,
+    navigationOptions: {
+            tabBarVisible: true,
+        },
+  }
+
 });
 
 TabNavigator.navigationOptions = {
   header: null,
 }
-
+/*
 const MainNavigator = createStackNavigator({
   Tabs: TabNavigator,
   Consulta: ConsultaScreen,
 });
-
-export default MainNavigator;
+*/
+export default TabNavigator;
