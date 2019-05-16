@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactNative from 'react-native';
-import { StyleSheet, View, Platform, SectionList, Text, Alert } from 'react-native';
+import { StyleSheet, View, Platform, SectionList, Image, Text, Alert, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import axios from 'axios';
 
@@ -79,9 +79,6 @@ class ConsultaScreen extends Component{
       this.setState({vigencia})
       console.log(vigencia);
 
-
-
-
       this.setState({encontrada: true})
     })
     .catch((error)=>{
@@ -92,68 +89,7 @@ class ConsultaScreen extends Component{
     })
   }
 
-  mostrarDatos(){
-   if(this.state.resultado){
-     if(this.state.resultado.validity){
-       return(
-         <View>
-           <Text>
-             Nombre: {this.state.resultado.name}
-           </Text>
-           <Text>
-             {this.state.resultado.run}
-           </Text>
-           <Text>
-             Años :{this.state.resultado.age}
-           </Text>
-           <Text>
-             Toma de Examen:{this.state.resultado.lastPapDate}
-           </Text>
-           <Text>
-             Vigencia :{this.state.resultado.validityDate}
-           </Text>
-           <Text>
-             Al día
-           </Text>
-         </View>
-       )
-     }
-     else{
-       return(
-         <View>
-           <Text>
-             Nombre: {this.state.resultado.name}
-           </Text>
-           <Text>
-             {this.state.resultado.run}
-           </Text>
-           <Text>
-             Años :{this.state.resultado.age}
-           </Text>
-           <Text>
-             Toma de Examen:{this.state.resultado.lastPapDate}
-           </Text>
-           <Text>
-             Vigencia :{this.state.resultado.validityDate}
-           </Text>
-           <Text>
-             Atrasado
-           </Text>
-           <Text>
-             Años :{this.state.resultado.diffYears}
-           </Text>
-           <Text>
-             Meses :{this.state.resultado.diffMonths}
-           </Text>
-           <Text>
-             Días:{this.state.resultado.diffDays}
-           </Text>
-         </View>
-        )
-      }
-
-    }
-  }
+  
   GetSectionListItem = item => {
     //Function for click on an item
     Alert.alert(item);
@@ -183,39 +119,80 @@ class ConsultaScreen extends Component{
       { id: '10', value: 'Bulgaria' },
     ];
     var C = [
-      { id: '11', value: 'Cambodia' },
-      { id: '12', value: 'Cameroon' },
-      { id: '13', value: 'Canada' },
-      { id: '14', value: 'Cabo' },
+      { id: '11', value: 'CEFAN MAIPÚ Av. Los Pajaritos 2470, Maipú' },
     ];
     return(
-      <View>
-        {/*this.mostrarDatos()*/}
+      <ScrollView>
+        {<Image
+            source={require('../assets/images/slide.png')}
+            style={styles.ImageStyle}
+          />}
         <SectionList
           ItemSeparatorComponent={this.FlatListItemSeparator}
           sections={[
             { title: 'Datos Personales', data: this.state.datP },
-            { title: 'Vigencia', data: this.state.vigencia },
-            { title: 'Información', data: C },
+            { title: 'Estado PAP', data: this.state.vigencia },
+            { title: 'Lugar Exámen', data: C },
           ]}
           renderSectionHeader={({ section }) => (
             <Text style={styles.SectionHeaderStyle}> {section.title} </Text>
           )}
-          renderItem={({ item }) => (
+          renderItem={({ item }) => {
             // Single Comes here which will be repeatative for the FlatListItems
-            <Text
-              style={styles.SectionListItemStyle}
-              //Item Separator View
-              onPress={this.GetSectionListItem.bind(
-                "holaaaa",
-                'Id: ' + item.label + ' Name: ' + item.value
-              )}>
-              {item.label} : {item.value}
-            </Text>
-          )}
+            if(item.label == "Vigencia"){
+              if(item.value == "Vigente"){
+                return(
+                  <View><Text
+                  style={styles.SectionListItemStyle2}
+                  //Item Separator View
+                  onPress={this.GetSectionListItem.bind(
+                    "holaaaa",
+                    'Información: \n' + 'Información: \n' +'Información: \n' 
+                  )}>
+                  {item.label} : {item.value} <Image
+            source={require('../assets/images/correcto.png')}
+            style={styles.ImageStyle4}
+          />
+                </Text>
+                
+                </View>
+
+                )
+              }
+              else{
+               return(
+                  <View><Text
+                  style={styles.SectionListItemStyle8}
+                  //Item Separator View
+                  onPress={this.GetSectionListItem.bind(
+                    "holaaaa",
+                    'Información: \n' + 'Información: \n' +'Información: \n' 
+                  )}>
+                  {item.label} : {item.value} <Image
+            source={require('../assets/images/incorrecto.png')}
+            style={styles.ImageStyle4}
+          />
+                </Text>
+                
+                </View>
+
+                )
+              }
+              
+            }
+            return(<Text
+                  style={styles.SectionListItemStyle}
+                  //Item Separator View
+                  onPress={this.GetSectionListItem.bind(
+                    "holaaaa",
+                    'Información: \n' + 'Información: \n' +'Información: \n' 
+                  )}>
+                  {item.label} : {item.value} 
+                </Text>)
+          }}
           keyExtractor={(item, index) => index}
         />
-      </View>
+      </ScrollView>
     )
   }
 
@@ -223,10 +200,19 @@ class ConsultaScreen extends Component{
 
 const styles = StyleSheet.create({
   SectionHeaderStyle: {
-    backgroundColor: '#CDDC89',
+    flex: 1,
+    backgroundColor: '#0089B1',
     fontSize: 20,
     padding: 5,
     color: '#fff',
+  },
+  ImageStyle: {
+    padding: 10,
+    margin: 5,
+    height: 110,
+    width:350,
+    resizeMode: 'stretch',
+    alignItems: 'center',
   },
 
   SectionListItemStyle: {
@@ -234,6 +220,24 @@ const styles = StyleSheet.create({
     padding: 15,
     color: '#000',
     backgroundColor: '#F5F5F5',
+  },
+  SectionListItemStyle2: {
+    fontSize: 15,
+    padding: 15,
+    color: '#000',
+    backgroundColor: '#7bf086',
+  },
+  ImageStyle4: {
+    height: 25,
+    width: 25,
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
+  },
+ SectionListItemStyle8: {
+    fontSize: 15,
+    padding: 15,
+    color: '#000',
+    backgroundColor: '#e86868',
   },
 });
 
