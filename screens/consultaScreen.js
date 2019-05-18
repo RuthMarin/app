@@ -149,7 +149,7 @@ class ConsultaScreen extends Component{
                     "holaaaa",
                     'Información: \n' + 'Información: \n' +'Información: \n' 
                   )}>
-                  {item.label} : {item.value} <Image
+                 {item.value} <Image
             source={require('../assets/images/correcto.png')}
             style={styles.ImageStyle4}
           />
@@ -168,7 +168,7 @@ class ConsultaScreen extends Component{
                     "holaaaa",
                     'Información: \n' + 'Información: \n' +'Información: \n' 
                   )}>
-                  {item.label} : {item.value} <Image
+                 {item.value} <Image
             source={require('../assets/images/incorrecto.png')}
             style={styles.ImageStyle4}
           />
@@ -208,9 +208,8 @@ const styles = StyleSheet.create({
   },
   ImageStyle: {
     padding: 10,
-    margin: 5,
     height: 110,
-    width:350,
+    width:360,
     resizeMode: 'stretch',
     alignItems: 'center',
   },
