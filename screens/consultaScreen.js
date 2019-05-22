@@ -17,6 +17,7 @@ class ConsultaScreen extends Component{
       vigencia: {},
       info: {},
       visible: [false, 1],
+
     }
     this.cambiarVisible = this.cambiarVisible.bind(this)
     this.cambiarVisible2 = this.cambiarVisible2.bind(this)
@@ -151,15 +152,15 @@ class ConsultaScreen extends Component{
       { id: '10', value: 'Bulgaria' },
     ];
     var C = [
-      { id: '11', label: "Dirección", value: 'CEFAN MAIPÚ Av. Los Pajaritos 2470, Maipú' },
+      { id: '11', value: 'CEFAN MAIPÚ Av. Los Pajaritos 2470, Maipú' },
     ];
     console.log(this.state.datP);
     return(
       <ScrollView>
-        {<Image
+        <Image
             source={require('../assets/images/slide.png')}
             style={styles.ImageStyle}
-          />}
+          />
           <Dialog
             visible={this.state.visible[0]}
             onTouchOutside={this.ocultar}
@@ -185,17 +186,29 @@ class ConsultaScreen extends Component{
             if(item.label == "Vigencia"){
               if(item.value == "Vigente"){
                 return(
-                  <View>
-                    <Text
-                      style={styles.SectionListItemStyle2}
-                      //Item Separator View
-                      onPress={this.cambiarVisible}>
-                    {item.value}
-                   <Image
-                      source={require('../assets/images/correcto.png')}
-                      style={styles.ImageStyle4}
-                    />
-                  </Text>
+                  <View style={styles.SectionListItemStyle2}>
+                      <View style={{flex: 1, flexDirection: 'row'}}>
+                      <View style={{width: 300, fontSize: 15}}>
+                      <Text
+
+                        //Item Separator View
+                        >
+                        {item.value}
+                        <Image
+                           source={require('../assets/images/correcto.png')}
+                           style={styles.ImageStyle4}
+                         />
+                      </Text>
+                      </View>
+                    <View style={{width: 50}}>
+                    <Text onPress={this.cambiarVisible} style={{height: 25}} >
+                     <Image
+                        source={require('../assets/images/preguntaIcon.png')}
+                        style={styles.ImageStyle5}
+                      />
+                      </Text>
+                    </View>
+                    </View>
 
 
                 </View>
@@ -266,8 +279,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#7bf086',
   },
   ImageStyle4: {
-    height: 25,
-    width: 25,
+    height: 20,
+    width: 20,
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
+  },
+  ImageStyle5: {
+    height: 20,
+    width: 20,
     justifyContent: 'flex-end',
     alignItems: 'flex-end',
   },
