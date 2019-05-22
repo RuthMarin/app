@@ -105,22 +105,23 @@ class HomeScreen extends Component<{}> {
       run: runV
     }
     console.log(this.props);
-    this.props.navigation.navigate('Consulta')
+
     this.props.setPaciente(runV)
-    /*var link = "http://scanpapp.herokuapp.com/app/consultation?run=" + runV;
+    var link = "http://scanpapp.herokuapp.com/app/consultation?run=" + runV;
     axios.get(link)
     .then(res=>{
       console.log("hola");
       console.log(res.data);
-      this.setState({resultado: res.data})
+      this.props.setPaciente(res.data)
       this.setState({encontrada: true})
+      this.props.navigation.navigate('Consulta')
     })
     .catch((error)=>{
       console.log("hola2");
       this.setState({encontrada: false})
       this.setState({resultado: false})
 
-    })*/
+    })
   }
   encontrada(){
     if(!this.state.encontrada){
@@ -178,7 +179,7 @@ class HomeScreen extends Component<{}> {
           <View>
             {this.encontrada()}
           </View>
-         
+
 
         </ScrollView>
       </KeyboardAwareScrollView>

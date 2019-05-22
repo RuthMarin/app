@@ -3,6 +3,8 @@ import ReactNative from 'react-native';
 import { StyleSheet, View, Platform, SectionList, Image, Text, Alert, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import Dialog, { DialogContent, DialogTitle } from 'react-native-popup-dialog';
+import { Button } from 'react-native'
 
 class ConsultaScreen extends Component{
   constructor(props){
@@ -13,83 +15,75 @@ class ConsultaScreen extends Component{
       encontrada: true,
       datP: {},
       vigencia: {},
-      info: {}
+      info: {},
+      visible: [false, 1],
     }
+    this.cambiarVisible = this.cambiarVisible.bind(this)
+    this.cambiarVisible2 = this.cambiarVisible2.bind(this)
+    this.ocultar = this.ocultar.bind(this)
+    this.textoPopup = this.textoPopup.bind(this)
   }
 
   componentDidMount(){
-    console.log(this.props.paciente.paciente);
+    console.log("asdadsad");
+    console.log(this.props.paciente);
     var link = "http://scanpapp.herokuapp.com/app/consultation?run=" + this.props.paciente.paciente;
-    axios.get(link)
-    .then(res=>{
-      console.log("hola");
-      console.log(res.data);
-      this.setState({resultado: res.data})
-      var datP = [];
-      datP.push({
-        label: "Nombre",
-        value: res.data.name
-      })
-      datP.push({
-        label: "Edad",
-        value: res.data.age
-      })
-      datP.push({
-        label: "Fecha de Nacimiento",
-        value: res.data.birthDate
-      })
-      console.log(datP);
-      this.setState({datP})
-      var vigencia = [];
 
-      if (res.data.validity) {
-        vigencia.push({
-          label: "Vigencia",
-          value: "Vigente"
-        })
-        vigencia.push({
-          label: "Fecha Último Pap",
-          value: res.data.lastPapDate
-        })
-        vigencia.push({
-          label: "Fecha de Validez",
-          value: res.data.validityDate
-        })
-
-      }
-      else {
-        vigencia.push({
-          label: "Vigencia",
-          value: "No Vigente"
-        })
-        vigencia.push({
-          label: "Fecha Último Pap",
-          value: res.data.lastPapDate
-        })
-        vigencia.push({
-          label: "Fecha de Validez",
-          value: res.data.validityDate
-        })
-        vigencia.push({
-          label: "Tiempo de Atraso",
-          value: res.data.diffDays + " dias " + res.data.diffMonths + " meses " + res.data.diffYears + " años"
-        })
-      }
-
-      this.setState({vigencia})
-      console.log(vigencia);
-
-      this.setState({encontrada: true})
+    var datP = [];
+    datP.push({
+      label: "Nombre",
+      value: this.props.paciente.name
     })
-    .catch((error)=>{
-      console.log("hola2");
-      this.setState({encontrada: false})
-      this.setState({resultado: false})
-
+    datP.push({
+      label: "Edad",
+      value: this.props.paciente.age
     })
+    datP.push({
+      label: "Fecha de Nacimiento",
+      value: this.props.paciente.birthDate
+    })
+    console.log(datP);
+    this.setState({datP})
+    var vigencia = [];
+
+    if (this.props.paciente.validity) {
+      vigencia.push({
+        label: "Vigencia",
+        value: "Vigente"
+      })
+      vigencia.push({
+        label: "Fecha Último Pap",
+        value: this.props.paciente.lastPapDate
+      })
+      vigencia.push({
+        label: "Fecha de Validez",
+        value: this.props.paciente.validityDate
+      })
+
+    }
+    else {
+      vigencia.push({
+        label: "Vigencia",
+        value: "No Vigente"
+      })
+      vigencia.push({
+        label: "Fecha Último Pap",
+        value: this.props.paciente.lastPapDate
+      })
+      vigencia.push({
+        label: "Fecha de Validez",
+        value: this.props.paciente.validityDate
+      })
+      vigencia.push({
+        label: "Tiempo de Atraso",
+        value: this.props.paciente.diffDays + " dias " + this.props.paciente.diffMonths + " meses " + this.props.paciente.diffYears + " años"
+      })
+    }
+    this.setState({vigencia})
+
   }
 
-  
+
   GetSectionListItem = item => {
     //Function for click on an item
     Alert.alert(item);
@@ -102,6 +96,44 @@ class ConsultaScreen extends Component{
       />
     );
   };
+
+  cambiarVisible(){
+    const nuevo = this.state.visible.slice()
+    nuevo[0] = true;
+    nuevo[1] = 1;
+    this.setState({visible: nuevo})
+  }
+
+  cambiarVisible2(){
+    const nuevo = this.state.visible.slice()
+    nuevo[0] = true;
+    nuevo[1] = 2;
+    this.setState({visible: nuevo})
+  }
+
+  ocultar(){
+    const nuevo = this.state.visible.slice()
+    nuevo[0] = false
+    this.setState({visible: nuevo})
+  }
+
+  textoPopup(){
+    if(this.state.visible[1] == 1){
+      return(
+        <Text>
+          Aca va un texto cuando esta vigente
+        </Text>
+      )
+    }
+    else{
+      return(
+        <Text>
+          Aca va un texto cuando no esta vigente
+        </Text>
+      )
+    }
+  }
+
 
   render(){
     var A = [
@@ -119,14 +151,25 @@ class ConsultaScreen extends Component{
       { id: '10', value: 'Bulgaria' },
     ];
     var C = [
-      { id: '11', value: 'CEFAN MAIPÚ Av. Los Pajaritos 2470, Maipú' },
+      { id: '11', label: "Dirección", value: 'CEFAN MAIPÚ Av. Los Pajaritos 2470, Maipú' },
     ];
+    console.log(this.state.datP);
     return(
       <ScrollView>
         {<Image
             source={require('../assets/images/slide.png')}
             style={styles.ImageStyle}
           />}
+          <Dialog
+            visible={this.state.visible[0]}
+            onTouchOutside={this.ocultar}
+            dialogTitle={<DialogTitle title="Dialog Title" />}
+          >
+
+            <DialogContent>
+                {this.textoPopup()}
+            </DialogContent>
+          </Dialog>
         <SectionList
           ItemSeparatorComponent={this.FlatListItemSeparator}
           sections={[
@@ -142,53 +185,49 @@ class ConsultaScreen extends Component{
             if(item.label == "Vigencia"){
               if(item.value == "Vigente"){
                 return(
-                  <View><Text
-                  style={styles.SectionListItemStyle2}
-                  //Item Separator View
-                  onPress={this.GetSectionListItem.bind(
-                    "holaaaa",
-                    'Información: \n' + 'Información: \n' +'Información: \n' 
-                  )}>
-                 {item.value} <Image
-            source={require('../assets/images/correcto.png')}
-            style={styles.ImageStyle4}
-          />
-                </Text>
-                
+                  <View>
+                    <Text
+                      style={styles.SectionListItemStyle2}
+                      //Item Separator View
+                      onPress={this.cambiarVisible}>
+                    {item.value}
+                   <Image
+                      source={require('../assets/images/correcto.png')}
+                      style={styles.ImageStyle4}
+                    />
+                  </Text>
+
+
                 </View>
 
                 )
               }
               else{
                return(
-                  <View><Text
-                  style={styles.SectionListItemStyle8}
-                  //Item Separator View
-                  onPress={this.GetSectionListItem.bind(
-                    "holaaaa",
-                    'Información: \n' + 'Información: \n' +'Información: \n' 
-                  )}>
-                 {item.value} <Image
-            source={require('../assets/images/incorrecto.png')}
-            style={styles.ImageStyle4}
-          />
-                </Text>
-                
-                </View>
-
+                  <View>
+                  <Text
+                    style={styles.SectionListItemStyle8}
+                    //Item Separator View
+                    onPress={this.cambiarVisible2}>
+                    {item.value}
+                    <Image
+                      source={require('../assets/images/incorrecto.png')}
+                      style={styles.ImageStyle4}
+                    />
+                    </Text>
+                  </View>
                 )
               }
-              
+
             }
-            return(<Text
-                  style={styles.SectionListItemStyle}
-                  //Item Separator View
-                  onPress={this.GetSectionListItem.bind(
-                    "holaaaa",
-                    'Información: \n' + 'Información: \n' +'Información: \n' 
-                  )}>
-                  {item.label} : {item.value} 
-                </Text>)
+            return(
+              <Text
+                style={styles.SectionListItemStyle}
+                //Item Separator View
+                >
+                {item.label} : {item.value}
+              </Text>
+            )
           }}
           keyExtractor={(item, index) => index}
         />
