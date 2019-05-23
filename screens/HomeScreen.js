@@ -6,9 +6,11 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import axios from 'axios';
 import { connect } from 'react-redux';
 import * as actions from '../redux/actions';
+import AnimateLoadingButton from 'react-native-animate-loading-button';
 
 
-class HomeScreen extends Component<{}> {
+
+class HomeScreen extends Component <{}> {
 
   _scrollToInput (reactNode: any) {
     // Add a 'scroll' ref to your ScrollView
@@ -94,7 +96,7 @@ class HomeScreen extends Component<{}> {
     }
   }
   buscar(){
-    
+
     if(isNaN(this.state.texto))
     {
       // If the Given Value is Not Number Then It Will Return True and This Part Will Execute.
@@ -102,6 +104,11 @@ class HomeScreen extends Component<{}> {
     }
     else
     {
+        this.loadingButton.showLoading(true);
+        // mock
+        setTimeout(() => {
+          this.loadingButton.showLoading(false);
+        }, 1800);
       var runV = ''
       var i = 0
       for (i = 0; i < this.state.texto.length-1; i++) {
@@ -126,7 +133,10 @@ class HomeScreen extends Component<{}> {
       .catch((error)=>{
         console.log("hola2");
         this.setState({encontrada: false})
-        this.setState({resultado: false})
+          this.setState({resultado: false})
+          this.loadingButton.showLoading(false)
+
+
 
       })
     }
@@ -188,22 +198,24 @@ class HomeScreen extends Component<{}> {
 
             {this.encontrada()}
           </View>
-
-          <View style={{marginTop:18}}>
-            <Button
-             onPress={this.buscar}
-             title="Consultar"
-              containerStyle={{padding:10, height:40, overflow:'hidden', borderRadius:5, backgroundColor: '#80D2DA'}}
-              disabledContainerStyle={{backgroundColor: '#ffc8eb'}}
-              style={{fontSize: 17, color: 'white'}}>
-              Consultar
-            </Button>
+          <View style={{ marginTop:18,flex: 1, backgroundColor: 'rgb(255,255,255)', justifyContent: 'center' }}>
+            <AnimateLoadingButton
+              ref={c => (this.loadingButton = c)}
+              containerStyle={{padding:10, overflow:'hidden', borderRadius:5, backgroundColor: '#80D2DA'}}
+              title="Consultar"
+              width={100}
+              height={40}
+              titleFontSize={17}
+              style={{color: 'white'}}
+              backgroundColor="rgb(128, 210, 218)"
+              borderRadius={5}
+              onPress={this.buscar}
+            />
           </View>
 
           <View>
             {this.mostrarDatos()}
           </View>
-
 
         </ScrollView>
 

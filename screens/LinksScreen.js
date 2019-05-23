@@ -1,67 +1,32 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
+import { View } from 'react-native';
+import AnimateLoadingButton from 'react-native-animate-loading-button';
 
-import { StyleSheet, Text, View, Button, Alert, TextInput } from 'react-native';
+export default class LoadingButton extends PureComponent {
+  _onPressHandler() {
+    this.loadingButton.showLoading(true);
 
-export default class App extends Component<{}> {
-
-  constructor()
-  {
-    super();
-
-    this.state={
-
-
-    }
+    // mock
+    setTimeout(() => {
+      this.loadingButton.showLoading(false);
+    }, 2000);
   }
-
-  CheckValueIsNumberOrNot=()=>{
-
-    if(isNaN(this.state.Value))
-    {
-      // If the Given Value is Not Number Then It Will Return True and This Part Will Execute.
-      Alert.alert("Ingrese solo números");
-    }
-    else
-    {
-      // If the Given Value is Number Then It Will Return False and This Part Will Execute.
-      Alert.alert("Value is Number");
-    }
-
-  }
-
 
   render() {
     return (
-      <View style={styles.MainContainer}>
-
-          <TextInput
-
-              placeholder="Enter Some Text here"
-
-              onChangeText={ TextInputValue => this.setState({Value: TextInputValue}) }
-
-              style={styles.TextInputStyle}
-            />
-
-           <Button title="Ingrese solo números" onPress={this.CheckValueIsNumberOrNot} />
-
+      <View style={{ flex: 1, backgroundColor: 'rgb(255,255,255)', justifyContent: 'center' }}>
+        <AnimateLoadingButton
+          ref={c => (this.loadingButton = c)}
+          width={300}
+          height={50}
+          title="BUTTON"
+          titleFontSize={16}
+          titleColor="rgb(255,255,255)"
+          backgroundColor="rgb(29,18,121)"
+          borderRadius={4}
+          onPress={this._onPressHandler.bind(this)}
+        />
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-
-  MainContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  TextInputStyle:{
-
-       textAlign: 'center',
-       height: 50,
-       width: '95%',
-       marginBottom: 10
-     },
-});
