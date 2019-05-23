@@ -16,7 +16,7 @@ class ConsultaScreen extends Component{
       datP: {},
       vigencia: {},
       info: {},
-      visible: [true, 1],
+      visible: [false, 1],
       dir: {}
 
     }
@@ -69,6 +69,7 @@ class ConsultaScreen extends Component{
     else {
       const nuevo = this.state.visible.slice()
       nuevo[1] = 2;
+      nuevo[0] = true;
       this.setState({visible: nuevo})
       vigencia.push({
         label: "Vigencia",
@@ -137,32 +138,43 @@ class ConsultaScreen extends Component{
   }
 
   textoPopup(){
-    if(this.state.visible[1] == 1){
+    if(this.state.visible[1] == 2){
       return(
         <Text>
-          Aca va un texto al abrir y esta vigente
-        </Text>
-      )
-    }
-    else if(this.state.visible[1] == 2){
-      return(
-        <Text>
-          Aca va un texto al abrir y no esta vigente
+          Tu PAP está atrasado, por tu bien y el de tu familia, realízate el examen cuanto antes.
         </Text>
       )
     }
     else if (this.state.visible[1] == 3) {
       return(
         <Text>
-          Aca va un texto cuando esta vigente
+          Tu PAP está en el plazo establecido.
         </Text>
+      )
+    }
+    else if(this.state.visible[1] == 4){
+      return(
+        <Text>
+          La fecha de vigencia de tu PAP ya caducó, dirígete a un CESFAM a hacértelo cuanto antes.
+        </Text>
+      )
+    }
+  }
+
+  tituloDialogo(){
+    if(this.state.visible[1] == 2){
+      return(
+        <DialogTitle title="ALERTA" />
+      )
+    }
+    else if (this.state.visible[1] == 3) {
+      return(
+        <DialogTitle title="Estado del PAP" />
       )
     }
     else{
       return(
-        <Text>
-          Aca va un texto cuando no esta vigente
-        </Text>
+        <DialogTitle title="Estado del PAP" />
       )
     }
   }
@@ -196,7 +208,7 @@ class ConsultaScreen extends Component{
           <Dialog
             visible={this.state.visible[0]}
             onTouchOutside={this.ocultar}
-            dialogTitle={<DialogTitle title="Dialog Title" />}
+            dialogTitle={this.tituloDialogo()}
           >
 
             <DialogContent>
