@@ -16,7 +16,8 @@ class ConsultaScreen extends Component{
       datP: {},
       vigencia: {},
       info: {},
-      visible: [false, 1],
+      visible: [true, 1],
+      dir: {}
 
     }
     this.cambiarVisible = this.cambiarVisible.bind(this)
@@ -48,6 +49,9 @@ class ConsultaScreen extends Component{
     var vigencia = [];
 
     if (this.props.paciente.validity) {
+      const nuevo = this.state.visible.slice()
+      nuevo[1] = 1;
+      this.setState({visible: nuevo})
       vigencia.push({
         label: "Vigencia",
         value: "Vigente"
@@ -63,6 +67,9 @@ class ConsultaScreen extends Component{
 
     }
     else {
+      const nuevo = this.state.visible.slice()
+      nuevo[1] = 2;
+      this.setState({visible: nuevo})
       vigencia.push({
         label: "Vigencia",
         value: "No Vigente"
@@ -81,6 +88,17 @@ class ConsultaScreen extends Component{
       })
     }
     this.setState({vigencia})
+
+    var dir = []
+    dir.push({
+      label: "Nombre CESFAM",
+      value: this.props.paciente.nameCenter
+    })
+    dir.push({
+      label: "Dirección CESFAM",
+      value: this.props.paciente.addressCenter
+    })
+    this.setState({dir})
 
   }
 
@@ -101,14 +119,14 @@ class ConsultaScreen extends Component{
   cambiarVisible(){
     const nuevo = this.state.visible.slice()
     nuevo[0] = true;
-    nuevo[1] = 1;
+    nuevo[1] = 3;
     this.setState({visible: nuevo})
   }
 
   cambiarVisible2(){
     const nuevo = this.state.visible.slice()
     nuevo[0] = true;
-    nuevo[1] = 2;
+    nuevo[1] = 4;
     this.setState({visible: nuevo})
   }
 
@@ -120,6 +138,20 @@ class ConsultaScreen extends Component{
 
   textoPopup(){
     if(this.state.visible[1] == 1){
+      return(
+        <Text>
+          Aca va un texto al abrir y esta vigente
+        </Text>
+      )
+    }
+    else if(this.state.visible[1] == 2){
+      return(
+        <Text>
+          Aca va un texto al abrir y no esta vigente
+        </Text>
+      )
+    }
+    else if (this.state.visible[1] == 3) {
       return(
         <Text>
           Aca va un texto cuando esta vigente
@@ -176,7 +208,7 @@ class ConsultaScreen extends Component{
           sections={[
             { title: 'Datos Personales', data: this.state.datP },
             { title: 'Estado PAP', data: this.state.vigencia },
-            { title: 'Lugar Exámen', data: C },
+            { title: 'Lugar Exámen', data: this.state.dir },
           ]}
           renderSectionHeader={({ section }) => (
             <Text style={styles.SectionHeaderStyle}> {section.title} </Text>
@@ -187,48 +219,51 @@ class ConsultaScreen extends Component{
               if(item.value == "Vigente"){
                 return(
                   <View style={styles.SectionListItemStyle2}>
-                      <View style={{flex: 1, flexDirection: 'row'}}>
+                    <View style={{flex: 1, flexDirection: 'row'}}>
                       <View style={{width: 300, fontSize: 15}}>
-                      <Text
-
-                        //Item Separator View
-                        >
-                        {item.value}
-                        <Image
+                        <Text>
+                          {item.value}
+                          <Image
                            source={require('../assets/images/correcto.png')}
                            style={styles.ImageStyle4}
-                         />
-                      </Text>
+                           />
+                        </Text>
                       </View>
-                    <View style={{width: 50}}>
-                    <Text onPress={this.cambiarVisible} style={{height: 25}} >
-                     <Image
-                        source={require('../assets/images/preguntaIcon.png')}
-                        style={styles.ImageStyle5}
-                      />
-                      </Text>
+                      <View style={{width: 50}}>
+                        <Text onPress={this.cambiarVisible} style={{height: 25}} >
+                         <Image
+                            source={require('../assets/images/preguntaIcon.png')}
+                            style={styles.ImageStyle5}
+                          />
+                        </Text>
+                      </View>
                     </View>
-                    </View>
-
-
-                </View>
-
+                  </View>
                 )
               }
               else{
                return(
-                  <View>
-                  <Text
-                    style={styles.SectionListItemStyle8}
-                    //Item Separator View
-                    onPress={this.cambiarVisible2}>
-                    {item.value}
-                    <Image
-                      source={require('../assets/images/incorrecto.png')}
-                      style={styles.ImageStyle4}
-                    />
-                    </Text>
-                  </View>
+                 <View style={styles.SectionListItemStyle8}>
+                   <View style={{flex: 1, flexDirection: 'row'}}>
+                     <View style={{width: 300, fontSize: 15}}>
+                       <Text>
+                         {item.value}
+                         <Image
+                          source={require('../assets/images/incorrecto.png')}
+                          style={styles.ImageStyle4}
+                          />
+                       </Text>
+                     </View>
+                     <View style={{width: 50}}>
+                       <Text onPress={this.cambiarVisible2} style={{height: 25}} >
+                        <Image
+                           source={require('../assets/images/preguntaIcon.png')}
+                           style={styles.ImageStyle5}
+                         />
+                       </Text>
+                     </View>
+                   </View>
+                 </View>
                 )
               }
 
