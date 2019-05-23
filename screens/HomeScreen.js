@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactNative from 'react-native';
-import { StyleSheet, View, TextInput, Image, Text, ScrollView } from 'react-native';
+import { StyleSheet, View, TextInput, Image,Alert, Text, ScrollView } from 'react-native';
 import Button from 'react-native-button';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import axios from 'axios';
@@ -94,40 +94,55 @@ class HomeScreen extends Component<{}> {
     }
   }
   buscar(){
-    var runV = ''
-    var i = 0
-    for (i = 0; i < this.state.texto.length-1; i++) {
-      runV = runV + this.state.texto[i]
+    
+    if(isNaN(this.state.texto))
+    {
+      // If the Given Value is Not Number Then It Will Return True and This Part Will Execute.
+      Alert.alert("Ingrese solo números");
     }
-    runV = runV + '-' + this.state.texto[i];
-    console.log(runV)
-    const PatientDTO = {
-      run: runV
+    else
+    {
+      var runV = ''
+      var i = 0
+      for (i = 0; i < this.state.texto.length-1; i++) {
+        runV = runV + this.state.texto[i]
+      }
+      runV = runV + '-' + this.state.texto[i];
+      console.log(runV)
+      const PatientDTO = {
+        run: runV
+      }
+      console.log(this.props);
+
+      var link = "http://scanpapp.herokuapp.com/app/consultation?run=" + runV;
+      axios.get(link)
+      .then(res=>{
+        console.log("hola");
+        console.log(res.data);
+        this.props.setPaciente(res.data)
+        this.setState({encontrada: true})
+        this.props.navigation.navigate('Consulta')
+      })
+      .catch((error)=>{
+        console.log("hola2");
+        this.setState({encontrada: false})
+        this.setState({resultado: false})
+
+      })
     }
-    console.log(this.props);
 
-    var link = "http://scanpapp.herokuapp.com/app/consultation?run=" + runV;
-    axios.get(link)
-    .then(res=>{
-      console.log("hola");
-      console.log(res.data);
-      this.props.setPaciente(res.data)
-      this.setState({encontrada: true})
-      this.props.navigation.navigate('Consulta')
-    })
-    .catch((error)=>{
-      console.log("hola2");
-      this.setState({encontrada: false})
-      this.setState({resultado: false})
-
-    })
   }
   encontrada(){
     if(!this.state.encontrada){
       return(
-       <View style={{width: 200, backgroundColor: '#80D2DA'}}>
-            <Text>
-              Paciente no encontrado
+       <View style={{marginTop: 18, padding:2,
+       backgroundColor: '#dc2424',
+       alignItems: 'center', width:200,height: 32, borderRadius:3}}>
+            <Text style={{textAlign: 'center',color: '#ffffff'}}>
+              Paciente no encontrado  <Image
+                  source={require('../assets/images/error.png')}
+                  style={styles.ImageStyle4}
+                />
             </Text>
           </View>
 
@@ -161,11 +176,20 @@ class HomeScreen extends Component<{}> {
               style={{ flex: 1 }}
               placeholder="Ingresa tu R.U.N aquí"
               underlineColorAndroid="transparent"
+              keyboardType='numeric'
+              onChangeText={(text)=> this.onChanged(text)}
+              value={this.state.myNumber}
+              maxLength={9}  //setting limit of input
               onFocus={(event) => this.onFocus(event)}
               onChangeText={(text)=>this.setState({texto: text})}
             />
           </View>
-          <View>
+          <View >
+
+            {this.encontrada()}
+          </View>
+
+          <View style={{marginTop:18}}>
             <Button
              onPress={this.buscar}
              title="Consultar"
@@ -175,15 +199,14 @@ class HomeScreen extends Component<{}> {
               Consultar
             </Button>
           </View>
+
           <View>
             {this.mostrarDatos()}
-          </View>
-          <View>
-            {this.encontrada()}
           </View>
 
 
         </ScrollView>
+
       </KeyboardAwareScrollView>
     );
   }
@@ -247,6 +270,10 @@ const styles = StyleSheet.create({
     width: 160,
     resizeMode: 'stretch',
     alignItems: 'center',
+  },
+  ImageStyle4: {
+    height: 20,
+    width: 20,
   },
   getStartedText: {
     fontSize: 17,

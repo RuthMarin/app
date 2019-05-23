@@ -1,60 +1,67 @@
-import React, { Component } from 'react'
-import { Text, View, TouchableOpacity, StyleSheet } from 'react-native'
-   
-class List extends Component {
-   state = {
-      names: [
-         {
-            id: 0,
-            name: 'Ben',
-         },
-         {
-            id: 1,
-            name: 'Susan',
-         },
-         {
-            id: 2,
-            name: 'Robert',
-         },
-         {
-            id: 3,
-            name: 'Mary',
-         }
-      ]
-   }
-   alertItemName = (item) => {
-      alert(item.name)
-   }
-   render() {
-      return (
-         <View>
-            {
-               this.state.names.map((item, index) => (
-                  <TouchableOpacity
-                     key = {item.id}
-                     style = {styles.container}
-                     onPress = {() => this.alertItemName(item)}>
-                     <Text style = {styles.text}>
-                        {item.name}
-                     </Text>
-                  </TouchableOpacity>
-               ))
-            }
-         </View>
-      )
-   }
+import React, { Component } from 'react';
+
+import { StyleSheet, Text, View, Button, Alert, TextInput } from 'react-native';
+
+export default class App extends Component<{}> {
+
+  constructor()
+  {
+    super();
+
+    this.state={
+
+
+    }
+  }
+
+  CheckValueIsNumberOrNot=()=>{
+
+    if(isNaN(this.state.Value))
+    {
+      // If the Given Value is Not Number Then It Will Return True and This Part Will Execute.
+      Alert.alert("Ingrese solo números");
+    }
+    else
+    {
+      // If the Given Value is Number Then It Will Return False and This Part Will Execute.
+      Alert.alert("Value is Number");
+    }
+
+  }
+
+
+  render() {
+    return (
+      <View style={styles.MainContainer}>
+
+          <TextInput
+
+              placeholder="Enter Some Text here"
+
+              onChangeText={ TextInputValue => this.setState({Value: TextInputValue}) }
+
+              style={styles.TextInputStyle}
+            />
+
+           <Button title="Ingrese solo números" onPress={this.CheckValueIsNumberOrNot} />
+
+      </View>
+    );
+  }
 }
 
-export default List
+const styles = StyleSheet.create({
 
-const styles = StyleSheet.create ({
-   container: {
-      padding: 10,
-      marginTop: 3,
-      backgroundColor: '#d9f9b1',
-      alignItems: 'center',
-   },
-   text: {
-      color: '#4f603c'
-   }
-})
+  MainContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  TextInputStyle:{
+
+       textAlign: 'center',
+       height: 50,
+       width: '95%',
+       marginBottom: 10
+     },
+});
