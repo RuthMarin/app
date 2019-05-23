@@ -106,7 +106,6 @@ class HomeScreen extends Component<{}> {
     }
     console.log(this.props);
 
-    this.props.setPaciente(runV)
     var link = "http://scanpapp.herokuapp.com/app/consultation?run=" + runV;
     axios.get(link)
     .then(res=>{
@@ -126,9 +125,12 @@ class HomeScreen extends Component<{}> {
   encontrada(){
     if(!this.state.encontrada){
       return(
-        <Text>
-          Paciente no encontrada
-        </Text>
+       <View style={{width: 200, backgroundColor: '#80D2DA'}}>
+            <Text>
+              Paciente no encontrado
+            </Text>
+          </View>
+
       )
     }
   }
