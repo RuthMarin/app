@@ -7,10 +7,8 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import * as actions from '../redux/actions';
 import AnimateLoadingButton from 'react-native-animate-loading-button';
-import { Permissions, Notifications } from 'expo';
 
 
-const PUSH_ENDPOINT = 'http://scanpapp.herokuapp.com/app/setToken';
 
 async function registerForPushNotificationsAsync(idPatient) {
   const { status: existingStatus } = await Permissions.getAsync(
@@ -70,12 +68,71 @@ class HomeScreen extends Component <{}> {
     this.state = {
       texto: '',
       resultado: false,
-      encontrada: true,
-      notification: '',
+      encontrada: true
     }
     this.buscar = this.buscar.bind(this)
+    this.mostrarDatos = this.mostrarDatos.bind(this)
     this.encontrada = this.encontrada.bind(this)
   }
+   mostrarDatos(){
+    if(this.state.resultado){
+      if(this.state.resultado.validity){
+        return(
+          <View>
+            <Text>
+              Nombre: {this.state.resultado.name}
+            </Text>
+            <Text>
+              {this.state.resultado.run}
+            </Text>
+            <Text>
+              Años :{this.state.resultado.age}
+            </Text>
+            <Text>
+              Toma de Examen:{this.state.resultado.lastPapDate}
+            </Text>
+            <Text>
+              Vigencia :{this.state.resultado.validityDate}
+            </Text>
+            <Text>
+              Al día
+            </Text>
+          </View>
+        )
+      }
+      else{
+        return(
+          <View>
+            <Text>
+              Nombre: {this.state.resultado.name}
+            </Text>
+            <Text>
+              {this.state.resultado.run}
+            </Text>
+            <Text>
+              Años :{this.state.resultado.age}
+            </Text>
+            <Text>
+              Toma de Examen:{this.state.resultado.lastPapDate}
+            </Text>
+            <Text>
+              Vigencia :{this.state.resultado.validityDate}
+            </Text>
+            <Text>
+              Atrasado
+            </Text>
+            <Text>
+              Años :{this.state.resultado.diffYears}
+            </Text>
+            <Text>
+              Meses :{this.state.resultado.diffMonths}
+            </Text>
+            <Text>
+              Días:{this.state.resultado.diffDays}
+            </Text>
+          </View>
+        )
+      }
 
 
   setToken(idPatient) {
@@ -130,6 +187,8 @@ class HomeScreen extends Component <{}> {
       .catch((error)=>{
         this.setState({encontrada: false})
           this.setState({resultado: false})
+          this.loadingButton.showLoading(false)
+
 
 
       })
@@ -207,7 +266,9 @@ class HomeScreen extends Component <{}> {
             />
           </View>
 
-
+          <View>
+            {this.mostrarDatos()}
+          </View>
 
         </ScrollView>
 
