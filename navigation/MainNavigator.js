@@ -1,9 +1,9 @@
 import { createStackNavigator } from 'react-navigation'
-import Login from '../screens/LoginScreen'
+import HomeScreen from '../screens/HomeScreen';
 
 const AuthNavigator = createStackNavigator(
   {
-    Login: { screen: Login },
+    Home: { screen: HomeScreen },
   }
 );
 export default AuthNavigator;

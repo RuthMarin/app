@@ -35,6 +35,21 @@ async function registerForPushNotificationsAsync(paciente) {
   // Get the token that uniquely identifies this device
   let token = await Notifications.getExpoPushTokenAsync();
   console.log(this.token);
+  return fetch(PUSH_ENDPOINT, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      token: {
+        value: token,
+      },
+      user: {
+        username: paciente,
+      },
+    }),
+  });
 
 }
 
@@ -65,8 +80,8 @@ class HomeScreen extends Component <{}> {
   }
 
 
-  componentDidMount() {
-    registerForPushNotificationsAsync();
+  setToken() {
+    registerForPushNotificationsAsync(this.state.texto);
 
     // Handle notifications that are received or selected while the app
     // is open. If the app was closed and then opened by tapping the

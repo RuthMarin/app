@@ -9,7 +9,6 @@ import SettingsScreen from '../screens/SettingsScreen';
 import ConsultaScreen from '../screens/consultaScreen';
 
 const HomeStack = createStackNavigator({
-  Home: HomeScreen,
   Consulta: ConsultaScreen
 });
 
