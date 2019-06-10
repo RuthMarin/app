@@ -26,7 +26,7 @@ export default class Info extends React.Component {
       />
       <FlatList
         data={data}
-        keyExtractor={(item, index) => item.id}
+        keyExtractor={(item, index) => item.title}
         renderItem={({ item, separators }) => (
 
           <Text style={styles.SectionHeaderStyle}>

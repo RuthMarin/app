@@ -7,7 +7,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import * as actions from '../redux/actions';
 import AnimateLoadingButton from 'react-native-animate-loading-button';
-
+import { Permissions, Notifications } from 'expo';
 
 
 async function registerForPushNotificationsAsync(idPatient) {
@@ -71,68 +71,9 @@ class HomeScreen extends Component <{}> {
       encontrada: true
     }
     this.buscar = this.buscar.bind(this)
-    this.mostrarDatos = this.mostrarDatos.bind(this)
     this.encontrada = this.encontrada.bind(this)
   }
-   mostrarDatos(){
-    if(this.state.resultado){
-      if(this.state.resultado.validity){
-        return(
-          <View>
-            <Text>
-              Nombre: {this.state.resultado.name}
-            </Text>
-            <Text>
-              {this.state.resultado.run}
-            </Text>
-            <Text>
-              Años :{this.state.resultado.age}
-            </Text>
-            <Text>
-              Toma de Examen:{this.state.resultado.lastPapDate}
-            </Text>
-            <Text>
-              Vigencia :{this.state.resultado.validityDate}
-            </Text>
-            <Text>
-              Al día
-            </Text>
-          </View>
-        )
-      }
-      else{
-        return(
-          <View>
-            <Text>
-              Nombre: {this.state.resultado.name}
-            </Text>
-            <Text>
-              {this.state.resultado.run}
-            </Text>
-            <Text>
-              Años :{this.state.resultado.age}
-            </Text>
-            <Text>
-              Toma de Examen:{this.state.resultado.lastPapDate}
-            </Text>
-            <Text>
-              Vigencia :{this.state.resultado.validityDate}
-            </Text>
-            <Text>
-              Atrasado
-            </Text>
-            <Text>
-              Años :{this.state.resultado.diffYears}
-            </Text>
-            <Text>
-              Meses :{this.state.resultado.diffMonths}
-            </Text>
-            <Text>
-              Días:{this.state.resultado.diffDays}
-            </Text>
-          </View>
-        )
-      }
+
 
 
   setToken(idPatient) {
@@ -164,7 +105,7 @@ class HomeScreen extends Component <{}> {
         this.loadingButton.showLoading(true);
         // mock
         var x = this.loadingButton
-        
+
       var runV = ''
       var i = 0
       for (i = 0; i < this.state.texto.length-1; i++) {
@@ -264,10 +205,6 @@ class HomeScreen extends Component <{}> {
               borderRadius={5}
               onPress={this.buscar}
             />
-          </View>
-
-          <View>
-            {this.mostrarDatos()}
           </View>
 
         </ScrollView>
