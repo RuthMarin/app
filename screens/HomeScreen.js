@@ -163,12 +163,9 @@ class HomeScreen extends Component <{}> {
         ref="scroll"
       >
         <ScrollView contentContainerStyle={styles.container}>
+
           <Image
-            source={require('../assets/images/fff.png')}
-            style={styles.ImageStyle2}
-          />
-          <Image
-            source={require('../assets/images/qqq.png')}
+            source={require('../assets/images/portada3.png')}
             style={styles.ImageStyle3}
           />
           <View style={styles.SectionStyle}>
@@ -269,8 +266,8 @@ const styles = StyleSheet.create({
   ImageStyle3: {
     padding: 10,
     margin: 5,
-    height: 140,
-    width: 160,
+    height: 280,
+    width: 360,
     resizeMode: 'stretch',
     alignItems: 'center',
   },

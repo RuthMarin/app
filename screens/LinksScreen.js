@@ -32,13 +32,18 @@ export default class Info extends React.Component {
       <FlatList
         data={data}
         keyExtractor={(item, index) => item.title}
-        renderItem={({ item, separators }) => (
+        renderItem={({ item, separators, index }) => {
+          let style = [
+           styles.SectionHeaderStyle,
+           {'backgroundColor': index % 2 === 0 ? '#f95e97' : '#00afa4'}
+          ];
+          return(
+            <Text style={style}>
+            {item.title}
+            </Text>
+          )
 
-          <Text style={styles.SectionHeaderStyle}>
-          {item.title}
-          </Text>
-
-        )}
+        }}
         ItemSeparatorComponent={({ highlighted }) => (
           <Separator isHidden={highlighted} />
         )}
