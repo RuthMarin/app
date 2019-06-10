@@ -12,44 +12,43 @@ import { Permissions, Notifications } from 'expo';
 
 const PUSH_ENDPOINT = 'http://scanpapp.herokuapp.com/app/setToken';
 
-async function registerForPushNotificationsAsync(paciente) {
+async function registerForPushNotificationsAsync(idPatient) {
   const { status: existingStatus } = await Permissions.getAsync(
-    Permissions.NOTIFICATIONS
-  );
-  let finalStatus = existingStatus;
+      Permissions.NOTIFICATIONS
+    );
+    let finalStatus = existingStatus;
 
-  // only ask if permissions have not already been determined, because
-  // iOS won't necessarily prompt the user a second time.
-  if (existingStatus !== 'granted') {
-    // Android remote notification permissions are granted during the app
-    // install, so this will only ask on iOS
-    const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
-    finalStatus = status;
-  }
+    console.log( await Permissions.getAsync(Permissions.NOTIFICATIONS))
+    // only ask if permissions have not already been determined, because
+    // iOS won't necessarily prompt the user a second time.
+    if (existingStatus !== 'granted') {
+      // Android remote notification permissions are granted during the app
+      // install, so this will only ask on iOS
+      const { status } = await Expo.Permissions.askAsync(Permissions.NOTIFICATIONS);
+      finalStatus = status;
 
-  // Stop here if the user did not grant permissions
-  if (finalStatus !== 'granted') {
-    return;
-  }
+    }
 
-  // Get the token that uniquely identifies this device
-  let token = await Notifications.getExpoPushTokenAsync();
-  console.log(this.token);
-  return fetch(PUSH_ENDPOINT, {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      token: {
-        value: token,
-      },
-      user: {
-        username: paciente,
-      },
-    }),
-  });
+    // Stop here if the user did not grant permissions
+    if (finalStatus !== 'granted') {
+        return;
+    }
+
+    // Get the token that uniquely identifies this device
+
+    let token = await Notifications.getExpoPushTokenAsync();
+    const tokenP = {
+      idPatient: idPatient,
+      accessToken: token
+    }
+    var link = 'http://scanpapp.herokuapp.com/app/access_token';
+    axios.put(link, tokenP)
+    .then(res=>{
+      console.log(res.data);
+    })
+    .catch((error)=>{
+
+    })
 
 }
 
@@ -76,24 +75,25 @@ class HomeScreen extends Component <{}> {
     }
     this.buscar = this.buscar.bind(this)
     this.encontrada = this.encontrada.bind(this)
-    this._handleNotification = this._handleNotification.bind(this)
   }
 
 
-  setToken() {
-    registerForPushNotificationsAsync(this.state.texto);
+  setToken(idPatient) {
+    registerForPushNotificationsAsync(idPatient);
 
     // Handle notifications that are received or selected while the app
     // is open. If the app was closed and then opened by tapping the
     // notification (rather than just tapping the app icon to open it),
     // this function will fire on the next tick after the app starts
     // with the notification data.
-    this._notificationSubscription = Notifications.addListener(this._handleNotification);
+    this._notificationSubscription = Notifications.addListener(this.props.setNotification);
+
+    console.log("bai");
   }
 
-  _handleNotification = (notification) => {
-    this.setState({notification: notification});
-  };
+  componentDidMount(){
+    console.log(this.props.paciente);
+  }
 
   buscar(){
 
@@ -106,9 +106,8 @@ class HomeScreen extends Component <{}> {
     {
         this.loadingButton.showLoading(true);
         // mock
-        setTimeout(() => {
-          this.loadingButton.showLoading(false);
-        }, 1800);
+        var x = this.loadingButton
+        
       var runV = ''
       var i = 0
       for (i = 0; i < this.state.texto.length-1; i++) {
@@ -119,19 +118,16 @@ class HomeScreen extends Component <{}> {
       const PatientDTO = {
         run: runV
       }
-      console.log(this.props);
 
       var link = "http://scanpapp.herokuapp.com/app/consultation?run=" + runV;
       axios.get(link)
       .then(res=>{
-        console.log("hola");
-        console.log(res.data);
+        this.setToken(res.data.idPatient)
         this.props.setPaciente(res.data)
         this.setState({encontrada: true})
         this.props.navigation.navigate('Consulta')
       })
       .catch((error)=>{
-        console.log("hola2");
         this.setState({encontrada: false})
           this.setState({resultado: false})
 
@@ -222,7 +218,8 @@ class HomeScreen extends Component <{}> {
 
 const mapStateToProps = state => {
     return {
-        paciente: state.paciente
+        paciente: state.paciente,
+        notification: state.notification
     }
 }
 

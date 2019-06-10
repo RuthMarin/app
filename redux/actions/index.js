@@ -4,3 +4,9 @@ export const setPaciente = (nombre) => {
     payload: nombre
   }
 }
+export const setNotification = (notification) => {
+  return {
+    type: 'setNotification',
+    payload: notification
+  }
+}
