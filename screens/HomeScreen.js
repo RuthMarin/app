@@ -91,6 +91,9 @@ class HomeScreen extends Component <{}> {
 
   componentDidMount(){
     console.log(this.props.paciente);
+    if(this.props.paciente.name != ''){
+      this.props.navigation.navigate('Consulta')
+    }
   }
 
   buscar(){
