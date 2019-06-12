@@ -183,7 +183,7 @@ class ConsultaScreen extends Component{
 
   desloguear(){
     this.props.logOut()
-    this.props.navigation.navigate('Home')
+    this.props.navigation.navigate('Login')
   }
 
 
@@ -299,7 +299,7 @@ class ConsultaScreen extends Component{
           keyExtractor={(item, index) => index}
         />
         <Button
-          onPress={this.props.logOut}
+          onPress={this.desloguear}
           title="Salir"
           color="#841584"
         />
