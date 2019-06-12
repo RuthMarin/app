@@ -5,8 +5,22 @@ import AppNavigator from './navigation/AppNavigator';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import Reducers from './redux/reducers';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
+import { PersistGate } from 'redux-persist/lib/integration/react';
 
-let store = createStore(Reducers);
+
+const persistConfig = {
+ key: 'root',
+ storage: storage,
+ stateReconciler: autoMergeLevel2,
+ whitelist: ['paciente']
+};
+
+let pReducer = persistReducer(persistConfig, Reducers);
+let store = createStore(pReducer);
+let persistor = persistStore(store);
 
 export default class App extends React.Component {
   state = {
@@ -25,10 +39,12 @@ export default class App extends React.Component {
     } else {
       return (
         <Provider store={ store }>
+        <PersistGate persistor={persistor}>
           <View style={styles.container}>
             {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
             <AppNavigator />
           </View>
+          </PersistGate>
         </Provider>
       );
     }
