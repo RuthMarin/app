@@ -19,7 +19,7 @@ HomeStack.navigationOptions = {
       focused={focused}
       name={
         Platform.OS === 'ios'
-          ? `ios-eye${focused ? '' : '-outline'}`
+          ? `ios-eye`
           : 'md-eye'
       }
     />
