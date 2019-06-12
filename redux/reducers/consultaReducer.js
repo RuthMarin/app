@@ -29,6 +29,21 @@ export default (state = initialState, action) => {
         addressCenter: action.payload.center.address,
         nameCenter: action.payload.center.name
       }
+      case 'logOut':
+      return {
+        ...state,
+        name: '',
+        age: 0,
+        birthDate: 0,
+        validity: false,
+        lastPapDate: 0,
+        validityDate: 0,
+        diffDays:0,
+        diffMonths:0,
+        diffYears:0,
+        addressCenter: '',
+        nameCenter: ''
+      }
     default:
       return state;
   }

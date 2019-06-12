@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import Dialog, { DialogContent, DialogTitle } from 'react-native-popup-dialog';
 import { Button } from 'react-native'
+import * as actions from '../redux/actions';
 
 class ConsultaScreen extends Component{
   constructor(props){
@@ -24,11 +25,12 @@ class ConsultaScreen extends Component{
     this.cambiarVisible2 = this.cambiarVisible2.bind(this)
     this.ocultar = this.ocultar.bind(this)
     this.textoPopup = this.textoPopup.bind(this)
+    this.desloguear = this.desloguear.bind(this)
   }
 
   componentDidMount(){
     console.log("asdadsad");
-    console.log(this.props.paciente);
+    console.log(this.props);
     var link = "http://scanpapp.herokuapp.com/app/consultation?run=" + this.props.paciente.paciente;
 
     var datP = [];
@@ -179,6 +181,11 @@ class ConsultaScreen extends Component{
     }
   }
 
+  desloguear(){
+    this.props.logOut()
+    this.props.navigation.navigate('Home')
+  }
+
 
   render(){
     var A = [
@@ -291,6 +298,11 @@ class ConsultaScreen extends Component{
           }}
           keyExtractor={(item, index) => index}
         />
+        <Button
+          onPress={this.props.logOut}
+          title="Salir"
+          color="#841584"
+        />
       </ScrollView>
     )
   }
@@ -351,4 +363,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(ConsultaScreen);
+export default connect(mapStateToProps, actions)(ConsultaScreen);

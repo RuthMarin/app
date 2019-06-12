@@ -4,6 +4,13 @@ export const setPaciente = (nombre) => {
     payload: nombre
   }
 }
+
+export const logOut = () => {
+  return {
+    type: 'logOut'
+  }
+}
+
 export const setNotification = (notification) => {
   return {
     type: 'setNotification',
