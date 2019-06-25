@@ -3,8 +3,8 @@
   "expoServerPort": null,
   "packagerPort": null,
   "packagerPid": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null,
+  "expoServerNgrokUrl": "https://ku-tz9.ruthm.app--copia.exp.direct",
+  "packagerNgrokUrl": "https://packager.ku-tz9.ruthm.app--copia.exp.direct",
+  "ngrokPid": 5114,
   "webpackServerPort": null
 }

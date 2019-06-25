@@ -85,7 +85,7 @@ class HomeScreen extends Component <{}> {
     // this function will fire on the next tick after the app starts
     // with the notification data.
     this._notificationSubscription = Notifications.addListener(this.props.setNotification);
-
+    console.log(this._notificationSubscription);
     console.log("bai");
   }
 

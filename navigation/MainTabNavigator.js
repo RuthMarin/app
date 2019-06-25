@@ -7,6 +7,7 @@ import HomeScreen from '../screens/HomeScreen';
 import LinksScreen from '../screens/LinksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import ConsultaScreen from '../screens/consultaScreen';
+import MapScreen from '../screens/MapScreen';
 
 const HomeStack = createStackNavigator({
   Consulta: ConsultaScreen
@@ -39,6 +40,21 @@ LinksStack.navigationOptions = {
     />
   ),
 };
+
+const MapStack = createStackNavigator({
+  Links: MapScreen,
+});
+
+MapStack.navigationOptions = {
+  tabBarLabel: 'CESFAM',
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={Platform.OS === 'ios' ? 'ios-map' : 'md-map'}
+    />
+  ),
+};
+
 
 const SettingsStack = createStackNavigator({
   Settings: SettingsScreen,
@@ -74,6 +90,12 @@ const TabNavigator = createBottomTabNavigator({
   },
   Settings: {
     screen: SettingsStack,
+    navigationOptions: {
+            tabBarVisible: true,
+        },
+  },
+  Maps: {
+    screen: MapStack,
     navigationOptions: {
             tabBarVisible: true,
         },
