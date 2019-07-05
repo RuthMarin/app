@@ -1,4 +1,5 @@
 const initialState={
+  idPatient: 0,
   name: '',
   age: 0,
   birthDate: 0,
@@ -17,6 +18,7 @@ export default (state = initialState, action) => {
     case 'setPaciente':
       return {
         ...state,
+        idPatient: action.payload.idPatient,
         name: action.payload.name,
         age: action.payload.age,
         birthDate: action.payload.birthDate,

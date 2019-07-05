@@ -6,6 +6,48 @@ import axios from 'axios';
 import Dialog, { DialogContent, DialogTitle } from 'react-native-popup-dialog';
 import { Button } from 'react-native'
 import * as actions from '../redux/actions';
+import { Permissions, Notifications } from 'expo';
+
+async function registerForPushNotificationsAsync(idPatient) {
+  const { status: existingStatus } = await Permissions.getAsync(
+      Permissions.NOTIFICATIONS
+    );
+    let finalStatus = existingStatus;
+
+    console.log( await Permissions.getAsync(Permissions.NOTIFICATIONS))
+    // only ask if permissions have not already been determined, because
+    // iOS won't necessarily prompt the user a second time.
+    if (existingStatus !== 'granted') {
+      // Android remote notification permissions are granted during the app
+      // install, so this will only ask on iOS
+      const { status } = await Expo.Permissions.askAsync(Permissions.NOTIFICATIONS);
+      finalStatus = status;
+
+    }
+
+    // Stop here if the user did not grant permissions
+    if (finalStatus !== 'granted') {
+        return;
+    }
+
+    // Get the token that uniquely identifies this device
+
+    let token = await Notifications.getExpoPushTokenAsync();
+    const tokenP = {
+      idPatient: idPatient,
+      accessToken: token
+    }
+    var link = 'http://scanpapp.herokuapp.com/app/access_token';
+    axios.put(link, tokenP)
+    .then(res=>{
+      console.log(res.data);
+    })
+    .catch((error)=>{
+
+    })
+
+}
+
 
 class ConsultaScreen extends Component{
   constructor(props){
@@ -26,9 +68,11 @@ class ConsultaScreen extends Component{
     this.ocultar = this.ocultar.bind(this)
     this.textoPopup = this.textoPopup.bind(this)
     this.desloguear = this.desloguear.bind(this)
+    this.handleNotification = this.handleNotification.bind(this)
   }
 
   componentDidMount(){
+    this.setToken(this.props.paciente.idPatient)
     console.log("asdadsad");
     console.log(this.props);
     var link = "http://scanpapp.herokuapp.com/app/consultation?run=" + this.props.paciente.paciente;
@@ -105,6 +149,23 @@ class ConsultaScreen extends Component{
 
   }
 
+  setToken(idPatient) {
+    registerForPushNotificationsAsync(idPatient);
+
+    // Handle notifications that are received or selected while the app
+    // is open. If the app was closed and then opened by tapping the
+    // notification (rather than just tapping the app icon to open it),
+    // this function will fire on the next tick after the app starts
+    // with the notification data.
+    this._notificationSubscription = Notifications.addListener(this.handleNotification);
+    console.log(this._notificationSubscription);
+    console.log("bai");
+  }
+
+  handleNotification = (notification) => {
+    this.props.setNotification(notification)
+    this.props.navigation.navigate('Consulta')
+  };
 
   GetSectionListItem = item => {
     //Function for click on an item
@@ -359,7 +420,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
     return {
-        paciente: state.paciente
+        paciente: state.paciente,
+        notification: state.notification
     }
 }
 
