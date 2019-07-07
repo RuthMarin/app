@@ -25,14 +25,12 @@
     "ios": {
       "supportsTablet": true
     },
-        "android": {
-      "package": "ca.brentvatne.growlerprowler",
-      "config": {
-        "googleMaps": {
-          "apiKey": "AIzaSyCp-BUoX8B8699rkbnb2P2CK4gXSeesVcc"
-        }
-      }
-    }
+    "android": {
+   "package": "com.codingmechanic.mapcuny",
+   "config": {
+      "googleMaps": { "apiKey": "AIzaSyD5Lg6rnw91AxLNg7dqy2C1MrZGcG1zsoQ" }   
+   }
+}
   }
 
 }
