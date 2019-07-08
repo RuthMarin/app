@@ -73,7 +73,7 @@ class ConsultaScreen extends Component{
 
   componentDidMount(){
     this.setToken(this.props.paciente.idPatient)
-    console.log("asdadsad");
+    console.log("asdadsdsad");
     console.log(this.props);
     var link = "http://scanpapp.herokuapp.com/app/consultation?run=" + this.props.paciente.paciente;
 

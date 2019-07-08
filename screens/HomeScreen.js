@@ -7,49 +7,6 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import * as actions from '../redux/actions';
 import AnimateLoadingButton from 'react-native-animate-loading-button';
-import { Permissions, Notifications } from 'expo';
-
-
-async function registerForPushNotificationsAsync(idPatient) {
-  const { status: existingStatus } = await Permissions.getAsync(
-      Permissions.NOTIFICATIONS
-    );
-    let finalStatus = existingStatus;
-
-    console.log( await Permissions.getAsync(Permissions.NOTIFICATIONS))
-    // only ask if permissions have not already been determined, because
-    // iOS won't necessarily prompt the user a second time.
-    if (existingStatus !== 'granted') {
-      // Android remote notification permissions are granted during the app
-      // install, so this will only ask on iOS
-      const { status } = await Expo.Permissions.askAsync(Permissions.NOTIFICATIONS);
-      finalStatus = status;
-
-    }
-
-    // Stop here if the user did not grant permissions
-    if (finalStatus !== 'granted') {
-        return;
-    }
-
-    // Get the token that uniquely identifies this device
-
-    let token = await Notifications.getExpoPushTokenAsync();
-    const tokenP = {
-      idPatient: idPatient,
-      accessToken: token
-    }
-    var link = 'http://scanpapp.herokuapp.com/app/access_token';
-    axios.put(link, tokenP)
-    .then(res=>{
-      console.log(res.data);
-    })
-    .catch((error)=>{
-
-    })
-
-}
-
 
 class HomeScreen extends Component <{}> {
 
@@ -74,20 +31,6 @@ class HomeScreen extends Component <{}> {
     this.encontrada = this.encontrada.bind(this)
   }
 
-
-
-  setToken(idPatient) {
-    registerForPushNotificationsAsync(idPatient);
-
-    // Handle notifications that are received or selected while the app
-    // is open. If the app was closed and then opened by tapping the
-    // notification (rather than just tapping the app icon to open it),
-    // this function will fire on the next tick after the app starts
-    // with the notification data.
-    this._notificationSubscription = Notifications.addListener(this.props.setNotification);
-
-    console.log("bai");
-  }
 
   componentDidMount(){
     console.log(this.props.paciente);
@@ -123,7 +66,6 @@ class HomeScreen extends Component <{}> {
       var link = "http://scanpapp.herokuapp.com/app/consultation?run=" + runV;
       axios.get(link)
       .then(res=>{
-        this.setToken(res.data.idPatient)
         this.props.setPaciente(res.data)
         this.setState({encontrada: true})
         this.props.navigation.navigate('Consulta')

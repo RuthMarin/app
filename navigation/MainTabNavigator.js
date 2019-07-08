@@ -1,6 +1,6 @@
 import React from 'react';
 import { Platform } from 'react-native';
-import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
+import { createStackNavigator, createBottomTabNavigator, createMaterialTopTabNavigator } from 'react-navigation';
 
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
@@ -71,17 +71,7 @@ SettingsStack.navigationOptions = {
 };
 
 
-
-
-
-
-const TabNavigator = createBottomTabNavigator({
-  Home: {
-    screen: HomeStack,
-    navigationOptions: {
-            tabBarVisible: true,
-        },
-  },
+const TopNavigator = createMaterialTopTabNavigator({
   Link: {
     screen: LinksStack,
     navigationOptions: {
@@ -93,12 +83,32 @@ const TabNavigator = createBottomTabNavigator({
     navigationOptions: {
             tabBarVisible: true,
         },
+  }
+})
+
+const TopN = createStackNavigator({
+  TopN: TopNavigator
+})
+TopN.navigationOptions = {
+  tabBarLabel: 'Informaciones',
+};
+
+
+const TabNavigator = createBottomTabNavigator({
+  Home: {
+    screen: HomeStack,
+    navigationOptions: {
+            tabBarVisible: true,
+        },
   },
   Maps: {
     screen: MapStack,
     navigationOptions: {
             tabBarVisible: true,
         },
+  },
+  Navegador: {
+    screen: TopN
   }
 
 });
