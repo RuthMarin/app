@@ -9,7 +9,7 @@ const data = [
   { id: 3, title: "¿Quiénes deben realizarse este examen?" },
   { id: 4, title: "Todas las mujeres entre 25 y 64 años, cada tres años, especialmente las mayores de 35 años y todas aquellas de otra edad con factores de riesgo" },
   { id: 5, title: "¿Dónde hacerse el examen?" },
-  { id: 6, title: "En tu Centro de Salud más cercano. Recuerda que el PAP es parte del Examen de Medicina Preventiva" }
+  { id: 6, title: "En tu Cenasdtro de Salud más cercano. Recuerda que el PAP es parte del Examen de Medicina Preventiva" }
 ];
 
 export default class Info extends React.Component {
