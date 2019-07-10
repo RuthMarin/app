@@ -8,6 +8,7 @@ import LinksScreen from '../screens/LinksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import ConsultaScreen from '../screens/consultaScreen';
 import MapScreen from '../screens/MapScreen';
+import Info2 from '../screens/info';
 
 const HomeStack = createStackNavigator({
   Consulta: ConsultaScreen
@@ -70,6 +71,10 @@ SettingsStack.navigationOptions = {
   ),
 };
 
+const Info2Stack = createStackNavigator({
+  Info2: Info2,
+});
+
 
 const TopNavigator = createMaterialTopTabNavigator({
   Link: {
@@ -83,6 +88,9 @@ const TopNavigator = createMaterialTopTabNavigator({
     navigationOptions: {
             tabBarVisible: true,
         },
+  },
+  Info2:{
+    screen: Info2Stack
   }
 })
 
