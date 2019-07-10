@@ -19,7 +19,7 @@ export default class App extends React.Component {
 
 
     fetchMarkerData(latitude, longitude) {
-      var link = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=' + latitude +',' + longitude + '&radius=3500&type=HOSPITAL&keyword=CESFAM&key=AIzaSyD5Lg6rnw91AxLNg7dqy2C1MrZGcG1zsoQ'
+      var link = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=' + latitude +',' + longitude + '&radius=2000&language=es&type=HOSPITAL&keyword=CESFAM&key=AIzaSyD5Lg6rnw91AxLNg7dqy2C1MrZGcG1zsoQ'
       fetch(link)
         .then((response) => response.json())
         .then((responseJson) => {
@@ -89,7 +89,7 @@ export default class App extends React.Component {
                    latitude: marker.geometry.location.lat,
                    longitude: marker.geometry.location.lng,
                };
-               const metadata = `Status: ${marker.vicinity}`;
+               const metadata = `Dirección: ${marker.vicinity}`;
                return (
                    <MapView.Marker
                       key={index}

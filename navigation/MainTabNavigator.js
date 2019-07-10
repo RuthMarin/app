@@ -72,8 +72,11 @@ SettingsStack.navigationOptions = {
 };
 
 const Info2Stack = createStackNavigator({
-  Info2: Info2,
+  Prevención: Info2,
 });
+Info2Stack.navigationOptions = {
+  tabBarLabel: 'Prevención',
+};
 
 
 const TopNavigator = createMaterialTopTabNavigator({
@@ -88,10 +91,11 @@ const TopNavigator = createMaterialTopTabNavigator({
     screen: SettingsStack,
     navigationOptions: {
             tabBarVisible: true,
-             topBar: { visible: false, height: 0, } 
+             topBar: { visible: false, height: 0, }
         },
   },
   Info2:{
+    tabBarLabel: 'Prevención',
     screen: Info2Stack
   }
 })
