@@ -9,9 +9,6 @@ const data = [
 ];
 
 export default class Info extends React.Component {
-  static navigationOptions = {
-    title: 'Cancer Cervico Uterino',
-  };
 
 
   render() {

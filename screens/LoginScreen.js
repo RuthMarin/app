@@ -13,9 +13,7 @@ const data = [
 ];
 
 export default class Info extends React.Component {
-  static navigationOptions = {
-    title: 'Hazte el PAP',
-  };
+
 
 
   render() {

@@ -99,6 +99,12 @@ const TopN = createStackNavigator({
 })
 TopN.navigationOptions = {
   tabBarLabel: 'Informaciones',
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={Platform.OS === 'ios' ? 'ios-information-circle' : 'md-information-circle'}
+    />
+  ),
 };
 
 
