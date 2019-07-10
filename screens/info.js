@@ -3,6 +3,9 @@ import { TouchableOpacity, StyleSheet, FlatList, ScrollView, Image , View, Text,
 
 
 export default class Info2 extends React.Component {
+  static navigationOptions={
+    header: null
+  }
   render() {
     return (
       <ScrollView style={styles.container}>

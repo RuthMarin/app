@@ -81,12 +81,14 @@ const TopNavigator = createMaterialTopTabNavigator({
     screen: LinksStack,
     navigationOptions: {
             tabBarVisible: true,
+            header: null
         },
   },
   Settings: {
     screen: SettingsStack,
     navigationOptions: {
             tabBarVisible: true,
+             topBar: { visible: false, height: 0, } 
         },
   },
   Info2:{

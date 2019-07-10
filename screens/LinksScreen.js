@@ -14,6 +14,9 @@ const data = [
 
 export default class Info extends React.Component {
 
+  static navigationOptions={
+    header: null
+  }
 
   render() {
     /* Go ahead and delete ExpoConfigView and replace it with your
