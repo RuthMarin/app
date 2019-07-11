@@ -81,7 +81,6 @@ export default class App extends React.Component {
             }}
             showsUserLocation={true}
             showsMyLocationButton={true}
-            onRegionChangeComplete={this.regionChange}
 
           >
               {this.state.isLoading ? null : this.state.markers.map((marker, index) => {
