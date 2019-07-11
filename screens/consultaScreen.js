@@ -211,14 +211,14 @@ class ConsultaScreen extends Component{
     else if (this.state.visible[1] == 3) {
       return(
         <Text>
-          Tu PAP está en el plazo establecido.
+          Tu PAP está vigente por 3 años desde la fecha que te lo realizaste.
         </Text>
       )
     }
     else if(this.state.visible[1] == 4){
       return(
         <Text>
-          La fecha de vigencia de tu PAP ya caducó, dirígete a un CESFAM a hacértelo cuanto antes.
+          Tu PAP superó el período de 3 años.
         </Text>
       )
     }
