@@ -16,3 +16,7 @@ Cliente móvil
 ------------
 Expo para iOS y Android.
 Expo Client te ayuda a ver el proyecto. Genera una URL de desarrollo que puede abrir en el cliente Expo para obtener una vista previa de la aplicación. Expo cliente trabaja en dispositivos, simuladores y emuladores.
+
+Ejecutar
+------------
+- expo start
