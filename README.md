@@ -5,8 +5,8 @@ Ejecute el siguiente código para instalar React Native.
 
 Instalar Expo Client
 ===================
-Ejecute el siguiente código para instalar React Native.
-- sudo npm install -g react-native-cli
+Ejecute el siguiente código para instalar Expo Client.
+- npm install -g expo-cli
 
 Cliente móvil
 ------------
