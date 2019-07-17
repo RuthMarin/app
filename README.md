@@ -1,3 +1,7 @@
+Instalar Node.js
+===================
+- sudo apt-get install nodejs
+
 Instalar React Native
 ===================
 Ejecute el siguiente código para instalar React Native.
