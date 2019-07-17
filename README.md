@@ -1,7 +1,7 @@
-Estructura-de-Datos
+Instalar React Native
 ===================
-
-Trabajos y Tareas de la clase Estructura de Datos ITESM
+Ejecute el siguiente código para instalar React Native.
+sudo npm install -g react-native-cli
 
 License
 ------------
