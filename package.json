@@ -13,7 +13,7 @@
   "dependencies": {
     "@expo/samples": "2.1.1",
     "axios": "^0.18.0",
-    "expo": "^32.0.0",
+    "expo": "^46.0.14",
     "google-maps-react": "^2.0.2",
     "navigationbar-react-native": "0.0.5",
     "react": "16.5.0",
